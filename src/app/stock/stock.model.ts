@@ -5,3 +5,8 @@ export class Quote {
   public highPrice: number;
   public openingPrice: number;
 }
+
+export class Company {
+  public description: string;
+  public symbol: string;
+}
