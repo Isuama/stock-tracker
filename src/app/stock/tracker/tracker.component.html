@@ -5,8 +5,13 @@
   </div>
   <form>
     <div class="form-inline d-flex justify-content-center" style="margin: 4px">
-      <input type="text" id="symbol" />
-      <button class="btn-default" style="margin: 2px" (click)="onTrackStock()">
+      <input type="text" id="symbol" #symbol />
+      <button
+        class="btn-default"
+        style="margin: 2px"
+        (click)="onTrackStock(symbol.value)"
+        (input)="symbol.value = symbol.value.toUpperCase()"
+      >
         Track Stock
       </button>
     </div>
