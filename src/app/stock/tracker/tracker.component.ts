@@ -20,7 +20,14 @@ export class TrackerComponent implements OnInit {
 
   quotes = [];
   constructor(private stockService: StockService) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const currentData = this.stockService.getFromLocalStorage();
+    
+    if (currentData.length>0){
+      this.quotes.push(...currentData)
+      this.stockService.quoteChanged.next(this.quotes.slice());
+    }
+  }
   onTrackStock(symbol: string) {
 
     forkJoin([
@@ -42,6 +49,7 @@ export class TrackerComponent implements OnInit {
 
   addQuote(quoteToAdd: Quote) {
     this.quotes.push(quoteToAdd);
+    this.stockService.saveToLocalStorage(this.quotes);
     this.stockService.quoteChanged.next(this.quotes.slice());
   }
 }

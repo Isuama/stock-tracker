@@ -1,12 +1,12 @@
-<div class="row" *ngFor="let sentiment of sentiments | async">
+<div class="row" >
   <div class="col-xs-12">
-    <h5 class="card-title"> {{ sentiment.compName }}({{ sentiment.compSymbol }})</h5>
+    <!-- <h5 class="card-title"> {{ sentiment.compName }}({{ sentiment.compSymbol }})</h5> -->
     <hr />
   </div>
-  <div class="row d-flex justify-content-left">
-    <div class="col-md-8 corner-month" style="width: auto;">
+  <div class="row d-flex justify-content-left" >
+    <div class="col-md-8 corner-month" style="width: auto;" *ngFor="let sentiment of sentiments">
       <p class="card-text">
-        January <span style="font-size:30px;">{{ sentiment.change > 0 ? "&#8593;" : "&#8595;" }}</span>
+        {{ sentiment.month }} <span style="font-size:30px;">{{ sentiment.change > 0 ? "&#8593;" : "&#8595;" }}</span>
       </p>
       <hr />
       <p class="card-text">Change: {{ sentiment.change }}</p>
@@ -15,6 +15,6 @@
   </div>
   <div class="col-xs-4" style="margin-top: 15px;">
     <hr />
-    <button class="btn-default">< Back to list of stocks</button>
+    <button class="btn-default" (click)="navigateToHome()" >< Back to list of stocks</button>
   </div>
 </div>

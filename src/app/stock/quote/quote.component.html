@@ -1,14 +1,14 @@
 <div class="row d-flex justify-content-center">
-  <button
-      type="button"
-      class="btn-close close close-button"
-      aria-label="Close"
-    ></button>
   <div
     class="card mb-3"
     style="max-width: 280px; margin: 10px"
     *ngFor="let quote of quotes | async"
   >
+  <button
+  type="button"
+  class="btn-close close close-button"
+  aria-label="Close"
+></button>
     <div class="row no-gutters">
       <div class="col-md-12">
         <div class="card-body">

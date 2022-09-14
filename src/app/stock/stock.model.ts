@@ -37,17 +37,19 @@ export class Quote {
 // o: Open price of the day
 // h: High price of the day
 
-export class Sentiment{
-  public compName: string;
-  public compSymbol: string;
+export class SentimentObj{
   public month: string;
   public change: number;
   public mspr: number
-  constructor(name: string, symbol: string, month: string,  change: number, mspr: number){
-    this.compName = name;
-    this.compSymbol = symbol;
-    this.month = month;
-    this.change = change;
-    this.mspr = mspr;
+}
+
+export class Sentiment{
+   public compName: string;
+   public compSymbol: string;
+  public sentimentObj: SentimentObj;
+  constructor(name: string, symbol:string, month: string,  obj: SentimentObj){
+     this.compName = name;
+     this.compSymbol = symbol;
+    this.sentimentObj = obj;
   }
 }

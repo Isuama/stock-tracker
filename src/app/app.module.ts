@@ -9,15 +9,14 @@ import { StockComponent } from "./stock/stock.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { QuoteComponent } from "./stock/quote/quote.component";
 import { SentimentComponent } from "./stock/quote/sentiment/sentiment.component";
-import { Globals } from "./app.globals";
-import { StockService } from "./stock/stock.service";
 import { httpInterceptor } from "./interceptors/http-interceptor.service";
+import { AppRoutingModule } from './app-routing.module';
 
 
 
 @NgModule({
 
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   declarations: [
     AppComponent,
     StockComponent,
