@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { Company } from "./stock.model";
+import { Observable, Subject } from "rxjs";
+import { Company, Quote, Sentiment } from "./stock.model";
 import { map } from "rxjs/operators";
 import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
 import { Globals } from "../app.globals";
@@ -10,31 +10,19 @@ import { Globals } from "../app.globals";
   providedIn: "root",
 })
 export class StockService {
-  token: string = "bu4f8kn48v6uehqi3cqg";
-  constructor(private globals: Globals) {}
+  quoteChanged = new Subject<Quote[]>();
+  sentimentChanged = new Subject<Sentiment[]>();
 
-  // getCompany(symbol: string): Observable<any> {
-  //   return this.httpClient
-  //     .get(
-  //       "https://finnhub.io/api/v1/search?q=" + symbol + "&token=" + this.token
-  //     )
-  //     .pipe(
-  //       map((response) => {
-  //         return response["result"].filter((data) => {
-  //           return data.symbol === symbol;
-  //         });
-  //       })
-  //     );
-  // }
+  constructor(private globals: Globals, private httpClient: HttpClient) {}
 
   getCompany(symbol: string): Observable<any> {
     return this.httpClient
       .get(
-        "https://finnhub.io/api/v1/search?q=" + symbol + "&token=" + this.token
+        this.globals.finnhunCompanyBySymbolURL + symbol
       )
       .pipe(
         map((response) => {
-          return response["result"].filter((data) => {
+          return response["result"].find((data) => {
             return data.symbol === symbol;
           });
         })
@@ -42,13 +30,9 @@ export class StockService {
   }
 
   getQuote(symbol: string): Observable<any> {
-    return this.httpClient.get(
-      "https://finnhub.io/api/v1/quote?symbol=" +
-        symbol +
-        "&token=" +
-        this.token
+    return this.httpClient.get(this.globals.finnhubQuoteBySymbolURL + symbol
     );
   }
-}
 
-// quote: "https://finnhub.io/api/v1/quote?symbol=AAPL&token=bu4f8kn48v6uehqi3cqg"
+  
+}

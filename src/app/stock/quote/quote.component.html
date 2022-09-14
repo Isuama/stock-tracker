@@ -1,25 +1,25 @@
 <div class="row d-flex justify-content-center">
-  <div
-    class="card mb-3"
-    style="max-width: 280px; margin: 10px"
-    *ngFor="let quote of quotes"
-  >
-    <button
+  <button
       type="button"
       class="btn-close close close-button"
       aria-label="Close"
     ></button>
+  <div
+    class="card mb-3"
+    style="max-width: 280px; margin: 10px"
+    *ngFor="let quote of quotes | async"
+  >
     <div class="row no-gutters">
       <div class="col-md-12">
         <div class="card-body">
           <span class="d-flex justify-content-center" style="font-size: 50px">
-            {{ quote.percentChange > 0 ? "&#8593;" : "&#8595;" }}
+            {{ quote.changeToday > 0 ? "&#8593;" : "&#8595;" }}
           </span>
           <h5 class="card-title d-flex justify-content-center">
-            {{ quote.name }} ({{ quote.symbol }})
+            {{ quote.compName }} ({{ quote.compSymbol }})
           </h5>
           <hr />
-          <p class="card-text">Change Today: {{ quote.percentChange }}%</p>
+          <p class="card-text">Change Today: {{ quote.changeToday }}%</p>
           <p class="card-text">
             Opening Price: {{ quote.openingPrice | currency }}
           </p>
@@ -27,9 +27,11 @@
             Current Price: {{ quote.currentPrice | currency }}
           </p>
           <p class="card-text">High Price: {{ quote.highPrice | currency }}</p>
-          <button class="btn-default">Go to social sentiment details ></button>
+          <button class="btn-default" (click)="getSentimentDetails(quote.compName,quote.compSymbol)">Go to social sentiment details ></button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- template variable -->

@@ -6,13 +6,17 @@ import { AppComponent } from "./app.component";
 import { TrackerComponent } from "./stock/tracker/tracker.component";
 import { StockComponent } from "./stock/stock.component";
 
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { QuoteComponent } from "./stock/quote/quote.component";
 import { SentimentComponent } from "./stock/quote/sentiment/sentiment.component";
 import { Globals } from "./app.globals";
 import { StockService } from "./stock/stock.service";
+import { httpInterceptor } from "./interceptors/http-interceptor.service";
+
+
 
 @NgModule({
+
   imports: [BrowserModule, FormsModule, HttpClientModule],
   declarations: [
     AppComponent,
@@ -21,7 +25,7 @@ import { StockService } from "./stock/stock.service";
     QuoteComponent,
     SentimentComponent,
   ],
-  providers: [Globals, StockService],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

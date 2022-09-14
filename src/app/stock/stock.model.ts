@@ -36,3 +36,18 @@ export class Quote {
 // c: Current price
 // o: Open price of the day
 // h: High price of the day
+
+export class Sentiment{
+  public compName: string;
+  public compSymbol: string;
+  public month: string;
+  public change: number;
+  public mspr: number
+  constructor(name: string, symbol: string, month: string,  change: number, mspr: number){
+    this.compName = name;
+    this.compSymbol = symbol;
+    this.month = month;
+    this.change = change;
+    this.mspr = mspr;
+  }
+}

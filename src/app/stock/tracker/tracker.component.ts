@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 import { OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Observable } from "rxjs";
+import { forkJoin, Observable } from "rxjs";
 
 import { Company, Quote } from "../stock.model";
 import { StockService } from "../stock.service";
@@ -16,43 +16,32 @@ import { Subject } from "rxjs";
 export class TrackerComponent implements OnInit {
   company: Company | undefined;
   quote: Quote | undefined;
-  quoteChanged = new Subject<Quote[]>();
+  
 
-  public quotes = [];
-  //  public quotes = [
-  //new Quote("TESLA INC", "TSLA", 4.74, 304.42, 299.68, 305.49),
-  //  new Quote("APPLE INC", "APPL", -2.5, 202.12, 199.68, 375.89),
-  //];
-
+  quotes = [];
   constructor(private stockService: StockService) {}
   ngOnInit(): void {}
   onTrackStock(symbol: string) {
-    this.stockService.getCompany(symbol).subscribe((response) => {
-      this.company = response[0];
-      // /let x = this.company.length;
-    });
-    console.log("got comp", this.company);
-    console.log("entered al is:", symbol);
 
-    //get quote details
-    this.stockService.getQuote(symbol).subscribe((response) => {
-      this.quote = {
-        compName: this.company?.description,
-        compSymbol: this.company?.symbol,
-        changeToday: response.d,
-        currentPrice: response.c,
-        openingPrice: response.o,
-        highPrice: response.h,
+    forkJoin([
+      this.stockService.getCompany(symbol),
+    this.stockService.getQuote(symbol)]).subscribe((response) => {
+  this.quote = {
+        compName: response[0].description,
+        compSymbol: response[0].symbol,
+        changeToday: response[1].d,
+        currentPrice: response[1].c,
+        openingPrice: response[1].o,
+        highPrice: response[1].h,
       };
+      console.log(this.quote);
+      this.addQuote(this.quote)
 
-      this.addQuote(this.quote);
-      console.log("qt is", this.quote);
-      console.log(response);
-    });
+  })
   }
 
   addQuote(quoteToAdd: Quote) {
     this.quotes.push(quoteToAdd);
-    this.quoteChanged.next(this.quotes.slice());
+    this.stockService.quoteChanged.next(this.quotes.slice());
   }
 }

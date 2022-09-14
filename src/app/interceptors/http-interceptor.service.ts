@@ -4,9 +4,11 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Globals } from "../app.globals";
 
+@Injectable()
 export class httpInterceptor implements HttpInterceptor {
   constructor(private globals: Globals) {}
   intercept(
@@ -15,7 +17,7 @@ export class httpInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(
       req.clone({
-        params: req.params.append("token", this.globals.finhubToken),
+        params: req.params.append("token", this.globals.finnhubToken),
       })
     );
   }
