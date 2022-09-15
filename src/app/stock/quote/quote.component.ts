@@ -28,19 +28,25 @@ export class QuoteComponent implements OnInit {
   
   getSentimentDetails(name:string, symbol: string){
     this.router.navigate(['/sentiment',symbol],{relativeTo : this.route});
-    this.stockService.getSentiments(symbol).subscribe
-    ((response)=>{
-      this.sentiments = response.data
-      console.log(this.sentiments)
-      // this.addSentiment(response.data);
+    // this.stockService.getSentiments(symbol).subscribe
+    // ((response)=>{
+    //   this.sentiments = response.data
+    //   this.sentiments["compName"] = name;
+    //   console.log('senti',this.sentiment)
+    //   // this.addSentiment(response.data);
 
-    })
+    // })
   }
 
- addSentiment(objSentiment: Sentiment){
-  console.log('push',objSentiment)
-    this.sentiments.push(objSentiment);
-    this.stockService.sentimentChanged.next(this.sentiments.slice())
-  }
+//  addSentiment(objSentiment: Sentiment){
+//   console.log('push',objSentiment)
+//     this.sentiments.push(objSentiment);
+//     this.stockService.sentimentChanged.next(this.sentiments.slice())
+//   }
+
+deleteQuote(symbol:string){
+  console.log('removing',symbol)
+  this.stockService.deleteFromLocalStorage(symbol);
+}
   
 }

@@ -15,22 +15,29 @@ import { ActivatedRoute,Router } from '@angular/router';
 export class SentimentComponent implements OnInit {
   
   sentiments: Sentiment[]=[];
+  compSymbol: string;
+  compName: string;
 
-  constructor(private activatedRoute: ActivatedRoute,private router: Router) {}
+  constructor(private activatedRoute: ActivatedRoute,private router: Router,private stockService: StockService) {}
   ngOnInit(): void {
-   // this.sentiments = this.stockService.sentimentChanged.asObservable();
+  
    this.activatedRoute.data.subscribe(({ sentiment }) => {
-    // do something with your resolved data ...
+
     console.log('hehe',sentiment)
     this.sentiments.push(...sentiment["data"]);
+    this.compSymbol = sentiment?.symbol;
+    this.compName = sentiment?.compName;
+      // this.stockService.getCompany(this.compSymbol)
+      // .subscribe((response=>{
+      //   this.compName = response.description
+      // }))
   })
   }
 
   navigateToHome() {
     this.router.navigate([''], { relativeTo: this.activatedRoute });
   }
+ 
 
-
-  // this.sentiments = this.stockService
 }
 

@@ -11,6 +11,8 @@ import { QuoteComponent } from "./stock/quote/quote.component";
 import { SentimentComponent } from "./stock/quote/sentiment/sentiment.component";
 import { httpInterceptor } from "./interceptors/http-interceptor.service";
 import { AppRoutingModule } from './app-routing.module';
+import { NumberToMonthPipe } from './pipes/number-to-month.pipe';
+import { DatePipe } from "@angular/common";
 
 
 
@@ -23,10 +25,10 @@ import { AppRoutingModule } from './app-routing.module';
     TrackerComponent,
     QuoteComponent,
     SentimentComponent,
+    NumberToMonthPipe,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true},DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
 
-//1. HttpClientModule added to make API call communication with the internet

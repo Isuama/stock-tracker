@@ -43,7 +43,6 @@ export class StockService {
     //   localStorage.removeItem("quotes");
 
     localStorage.setItem("quotes",JSON.stringify(quotes))
-
   }
 
   getFromLocalStorage(): Quote[]{

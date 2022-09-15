@@ -7,6 +7,7 @@ import { forkJoin, Observable } from "rxjs";
 import { Company, Quote } from "../stock.model";
 import { StockService } from "../stock.service";
 import { Subject } from "rxjs";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-stock-tracker",
@@ -45,6 +46,7 @@ export class TrackerComponent implements OnInit {
       this.addQuote(this.quote)
 
   })
+
   }
 
   addQuote(quoteToAdd: Quote) {
@@ -52,4 +54,5 @@ export class TrackerComponent implements OnInit {
     this.stockService.saveToLocalStorage(this.quotes);
     this.stockService.quoteChanged.next(this.quotes.slice());
   }
+
 }
