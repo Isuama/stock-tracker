@@ -45,7 +45,7 @@ export class StockService {
   getFromLocalStorage(): Quote[] {
     const existingQuote = localStorage.getItem("quotes");
     const quotes: Quote[] = JSON.parse(existingQuote);
-    return quotes;
+    return quotes ?? [];
   }
 
   deleteFromLocalStorage(symbol: string): Quote[] {
