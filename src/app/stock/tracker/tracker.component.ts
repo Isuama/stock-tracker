@@ -1,13 +1,8 @@
 import { Component } from "@angular/core";
-
 import { OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { forkJoin, Observable } from "rxjs";
-
+import { forkJoin } from "rxjs";
 import { Company, Quote } from "../stock.model";
 import { StockService } from "../stock.service";
-import { Subject } from "rxjs";
-import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-stock-tracker",
@@ -17,24 +12,22 @@ import { DatePipe } from "@angular/common";
 export class TrackerComponent implements OnInit {
   company: Company | undefined;
   quote: Quote | undefined;
-  
 
   quotes = [];
   constructor(private stockService: StockService) {}
   ngOnInit(): void {
     const currentData = this.stockService.getFromLocalStorage();
-    
-    if (currentData.length>0){
-      this.quotes.push(...currentData)
-      this.stockService.quoteChanged.next(this.quotes.slice());
+
+    if (currentData.length > 0) {
+      this.stockService.quoteChanged.next(currentData);
     }
   }
   onTrackStock(symbol: string) {
-
     forkJoin([
       this.stockService.getCompany(symbol),
-    this.stockService.getQuote(symbol)]).subscribe((response) => {
-  this.quote = {
+      this.stockService.getQuote(symbol),
+    ]).subscribe((response) => {
+      this.quote = {
         compName: response[0].description,
         compSymbol: response[0].symbol,
         changeToday: response[1].d,
@@ -42,17 +35,14 @@ export class TrackerComponent implements OnInit {
         openingPrice: response[1].o,
         highPrice: response[1].h,
       };
-      console.log(this.quote);
-      this.addQuote(this.quote)
-
-  })
-
+      this.addQuote(this.quote);
+    });
   }
 
   addQuote(quoteToAdd: Quote) {
-    this.quotes.push(quoteToAdd);
-    this.stockService.saveToLocalStorage(this.quotes);
-    this.stockService.quoteChanged.next(this.quotes.slice());
+    this.stockService.saveToLocalStorage(quoteToAdd);
+    this.stockService.quoteChanged.next(
+      this.stockService.getFromLocalStorage()
+    );
   }
-
 }

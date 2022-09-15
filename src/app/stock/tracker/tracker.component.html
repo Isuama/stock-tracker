@@ -5,12 +5,13 @@
   </div>
   <form>
     <div class="form-inline d-flex justify-content-center" style="margin: 4px">
-      <input type="text" id="symbol" #symbol />
+      <input type="text" id="stockInput" #stockInput />
       <button
+        id="trackBtn"
         class="btn-default"
         style="margin: 2px"
-        (click)="onTrackStock(symbol.value)"
-        (input)="symbol.value = symbol.value.toUpperCase()"
+        (click)="onTrackStock(stockInput.value)"
+        (input)="stockInput.value = stockInput.value.toUpperCase()"
       >
         Track Stock
       </button>

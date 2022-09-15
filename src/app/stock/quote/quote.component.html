@@ -4,16 +4,21 @@
     style="max-width: 280px; margin: 10px"
     *ngFor="let quote of quotes | async"
   >
-  <button
-  type="button"
-  class="btn-close close close-button"
-  aria-label="Close"
-  (click)="deleteQuote(quote.compSymbol)"
-></button>
+    <button
+      [attr.id]="'remove' + quote.compSymbol"
+      type="button"
+      class="btn-close close close-button"
+      aria-label="Close"
+      (click)="deleteQuote(quote.compSymbol)"
+    ></button>
     <div class="row no-gutters">
       <div class="col-md-12">
         <div class="card-body">
-          <span class="d-flex justify-content-center" style="font-size: 50px">
+          <span
+            class="d-flex justify-content-center"
+            style="font-size: 50px"
+            [ngStyle]="{ color: quote.changeToday > 0 ? 'green' : 'red' }"
+          >
             {{ quote.changeToday > 0 ? "&#8593;" : "&#8595;" }}
           </span>
           <h5 class="card-title d-flex justify-content-center">
@@ -28,11 +33,15 @@
             Current Price: {{ quote.currentPrice | currency }}
           </p>
           <p class="card-text">High Price: {{ quote.highPrice | currency }}</p>
-          <button class="btn-default" (click)="getSentimentDetails(quote.compName,quote.compSymbol)">Go to social sentiment details ></button>
+          <button
+            [attr.id]="'sentiment' + quote.compSymbol"
+            class="btn-default"
+            (click)="getSentimentDetails(quote.compName, quote.compSymbol)"
+          >
+            Go to social sentiment details >
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- template variable -->

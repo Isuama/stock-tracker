@@ -10,14 +10,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { QuoteComponent } from "./stock/quote/quote.component";
 import { SentimentComponent } from "./stock/quote/sentiment/sentiment.component";
 import { httpInterceptor } from "./interceptors/http-interceptor.service";
-import { AppRoutingModule } from './app-routing.module';
-import { NumberToMonthPipe } from './pipes/number-to-month.pipe';
+import { AppRoutingModule } from "./app-routing.module";
+import { NumberToMonthPipe } from "./pipes/number-to-month.pipe";
 import { DatePipe } from "@angular/common";
 
-
-
 @NgModule({
-
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   declarations: [
     AppComponent,
@@ -27,8 +24,10 @@ import { DatePipe } from "@angular/common";
     SentimentComponent,
     NumberToMonthPipe,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true},DatePipe],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
+    DatePipe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
