@@ -13,9 +13,18 @@ import { httpInterceptor } from "./interceptors/http-interceptor.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { NumberToMonthPipe } from "./pipes/number-to-month.pipe";
 import { DatePipe } from "@angular/common";
+import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+  ],
   declarations: [
     AppComponent,
     StockComponent,
